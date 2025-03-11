@@ -9,7 +9,8 @@ class MajorController extends Controller
 {
     public function index()
     {
-        return response()->json(Major::all());
+        $majors = Major::all();
+        return view('index', compact('majors'));
     }
 
 

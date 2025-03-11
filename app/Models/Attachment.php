@@ -9,15 +9,10 @@ class Attachment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['file_name', 'file_path', 'post_id', 'comment_id'];
+    protected $fillable = ['file_name', 'file_path', 'attachable_id', 'attachable_type'];
 
-    public function post()
+    public function attachable()
     {
-        return $this->belongsTo(Post::class);
-    }
-
-    public function comment()
-    {
-        return $this->belongsTo(Comment::class);
+        return $this->morphTo();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Major;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class MajorController extends Controller
@@ -10,7 +11,14 @@ class MajorController extends Controller
     public function index()
     {
         $majors = Major::all();
-        return view('index', compact('majors'));
+        return view('majors/majors', compact('majors'));
+    }
+
+    public function view($id)
+    {
+        $major = Major::findOrFail($id);
+        $subjects = $major->subjects;
+        return view('majors/view', compact('major', 'subjects'));
     }
 
 

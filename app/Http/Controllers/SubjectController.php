@@ -12,6 +12,13 @@ class SubjectController extends Controller
         return response()->json(Subject::all());
     }
 
+    public function view($id)
+    {
+        $subject = Subject::findOrFail($id);
+        $posts = $subject->posts;
+        return view('subjects/subject', compact('subject', 'posts'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

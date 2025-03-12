@@ -19,6 +19,13 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/majors', [MajorController::class, 'index'])->name('show.majors');
+Route::get('/majors/{id}', [MajorController::class, 'view'])->name('view.major');
+
+Route::get('/subject/{id}', [SubjectController::class, 'view'])->name('view.subject');
+
+Route::get('/subject/{id}/post/create', [PostController::class, 'create'])->name('create.post');
+Route::post('/subject/{id}/posts', [PostController::class, 'store'])->name('store.post');
+
 Route::resource('/subjects', SubjectController::class);
 Route::resource('/posts', PostController::class);
 Route::get('/posts/{post}/comments', [CommentController::class, 'index']);

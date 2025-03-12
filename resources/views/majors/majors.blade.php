@@ -17,11 +17,13 @@
             text-align: center;
             padding: 100px 20px;
         }
-        .forum-card {
-            transition: transform 0.3s;
+        .major-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
         }
-        .forum-card:hover {
-            transform: scale(1.05);
+        .major-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
@@ -51,14 +53,15 @@
 <div class="container my-5">
     <div class="row">
         @foreach ($majors as $major)
-            <div class="col-md-6 mb-4">
-                <div class="card forum-card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $major->name }}</h5>
-                        <p class="card-text text-muted">Engage in discussions, share knowledge, and connect with colleagues.</p>
-                        <a href="#" class="btn btn-primary">Explore</a>
+            <div class="col-md-4 mb-4">
+                <a href="{{ route('view.major', $major->id) }}" class="text-decoration-none">
+                    <div class="card major-card shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ $major->name }}</h5>
+                            <p class="card-text text-muted">Click to explore discussions and resources.</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         @endforeach
     </div>

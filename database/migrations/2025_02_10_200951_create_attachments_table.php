@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('file_name');
             $table->string('file_path');
-            $table->foreignId('post_id')->nullable()->constrained()->onDelete('cascade');
-            $table->foreignId('comment_id')->nullable()->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('attachable_id');
+            $table->string('attachable_type');
             $table->timestamps();
         });
     }

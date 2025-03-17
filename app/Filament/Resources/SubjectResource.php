@@ -27,9 +27,12 @@ class SubjectResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required(),
-                Forms\Components\TextInput::make('major_id')
+                Forms\Components\Select::make('major_id')
+                    ->relationship('major', 'name')
+                    ->searchable()
+                    ->preload()
                     ->required()
-                    ->numeric(),
+                    ->native(),
             ]);
     }
 

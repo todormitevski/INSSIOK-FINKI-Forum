@@ -21,6 +21,11 @@ class MajorResource extends Resource
     protected static ?string $navigationLabel = 'Смерови';
     protected static ?int $navigationSort = 1;
 
+    public static function getTitle(): string
+    {
+        return 'Manage Majors';
+    }
+
     public static function form(Form $form): Form
     {
         return $form

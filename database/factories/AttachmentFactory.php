@@ -16,11 +16,16 @@ class AttachmentFactory extends Factory
 
     public function definition(): array
     {
+        $attachable = $this->faker->randomElement([
+            Post::factory(),
+            Comment::factory(),
+        ]);
+
         return [
             'file_name' => $this->faker->word . '.jpg',
             'file_path' => $this->faker->imageUrl(),
-            'post_id' => Post::factory(),
-            'comment_id' => Comment::factory(),
+            'attachable_id' => $attachable,
+            'attachable_type' => $attachable->modelName(),
         ];
     }
 }

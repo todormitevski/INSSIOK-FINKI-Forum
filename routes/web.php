@@ -18,10 +18,13 @@ Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::resource('majors', MajorController::class);
-Route::resource('subjects', SubjectController::class);
-Route::resource('posts', PostController::class);
-Route::get('posts/{post}/comments', [CommentController::class, 'index']);
-Route::post('posts/{post}/comments', [CommentController::class, 'store']);
-Route::resource('attachments', AttachmentController::class);
-Route::resource('users', AuthController::class);
+Route::resource('majors', MajorController::class)->only(['index', 'show']);
+Route::resource('subjects', SubjectController::class)->only(['index', 'show']);
+
+Route::middleware('auth')->group(function () {
+    Route::resource('posts', PostController::class);
+    Route::get('posts/{post}/comments', [CommentController::class, 'index']);
+    Route::post('posts/{post}/comments', [CommentController::class, 'store']);
+    Route::resource('attachments', AttachmentController::class);
+    Route::resource('users', AuthController::class);
+});

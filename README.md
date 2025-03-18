@@ -16,6 +16,7 @@ Laravel базиран форум, специјално создаден за с
 ## Технологии
 
 - Laravel
+- Filament
 - Tailwind CSS
 - MySQL / SQLite
 

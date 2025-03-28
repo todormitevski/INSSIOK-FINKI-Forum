@@ -9,14 +9,15 @@ class SubjectController extends Controller
 {
     public function index()
     {
-        return response()->json(Subject::all());
+        $subjects = Subject::all();
+        return view('subjects/index', compact('subjects'));
     }
 
-    public function view($id)
+    public function show($id)
     {
         $subject = Subject::findOrFail($id);
         $posts = $subject->posts;
-        return view('subjects/subject', compact('subject', 'posts'));
+        return view('subjects/show', compact('subject', 'posts'));
     }
 
     public function store(Request $request)
@@ -28,11 +29,6 @@ class SubjectController extends Controller
 
         $subject = Subject::create($validated);
         return response()->json($subject, 201);
-    }
-
-    public function show(Subject $subject)
-    {
-        return response()->json($subject);
     }
 
     public function update(Request $request, Subject $subject)

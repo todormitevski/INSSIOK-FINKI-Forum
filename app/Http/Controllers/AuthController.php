@@ -41,7 +41,8 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return response()->json($user, 201);
+//        return response()->json($user, 201);
+        return redirect()->route('show.login');
     }
 
     /**
@@ -58,7 +59,8 @@ class AuthController extends Controller
         if (Auth::attempt($validated)) {
             $request->session()->regenerate();
 
-            return response()->json(Auth::user());
+//            return response()->json(Auth::user());
+            return redirect()->intended('/');
         }
 
         throw ValidationException::withMessages([
@@ -73,6 +75,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return response()->json(Auth::user(), 201);
+//        return response()->json(Auth::user(), 201);
+        return redirect()->intended('/');
     }
 }

@@ -11,14 +11,14 @@ class MajorController extends Controller
     public function index()
     {
         $majors = Major::all();
-        return view('majors/majors', compact('majors'));
+        return view('majors/index', compact('majors'));
     }
 
-    public function view($id)
+    public function show($id)
     {
         $major = Major::findOrFail($id);
         $subjects = $major->subjects;
-        return view('majors/view', compact('major', 'subjects'));
+        return view('majors/show', compact('major', 'subjects'));
     }
 
 
@@ -31,12 +31,6 @@ class MajorController extends Controller
         $major = Major::create($validated);
 
         return response()->json($major, 201);
-    }
-
-
-    public function show(Major $major)
-    {
-        return response()->json($major);
     }
 
 

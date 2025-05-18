@@ -21,9 +21,14 @@ Route::resource('majors', MajorController::class)->only(['index', 'show']);
 Route::resource('subjects', SubjectController::class)->only(['index', 'show']);
 
 Route::middleware('auth')->group(function () {
+    Route::get('/subjects/{subject}/posts/create', [PostController::class, 'create'])
+        ->name('subjects.posts.create');
+    Route::post('/subjects/{subject}/posts', [PostController::class, 'storeForSubject'])
+        ->name('subjects.posts.store');
     Route::resource('posts', PostController::class);
     Route::get('posts/{post}/comments', [CommentController::class, 'index']);
-    Route::post('posts/{post}/comments', [CommentController::class, 'store']);
+    Route::post('posts/{post}/comments', [CommentController::class, 'store'])
+        ->name('posts.comments.store');
     Route::resource('attachments', AttachmentController::class);
     Route::resource('users', AuthController::class);
 });

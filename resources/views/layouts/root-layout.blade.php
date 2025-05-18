@@ -15,6 +15,15 @@
             transform: translateY(-10px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
+        .post-entry {
+            margin-top: 10px;
+            border-top: 1px solid #dee2e6;
+            transition: background-color 0.2s ease;
+        }
+        .post-entry:hover {
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>

@@ -20,7 +20,7 @@ class PostController extends Controller
         return view('posts.create', compact('subject'));
     }
 
-    public function store(Request $request, $id)
+    public function storeForSubject(Request $request, $id)
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -46,12 +46,14 @@ class PostController extends Controller
             }
         }
 
-        return redirect()->route('view.subject', $subject->id)->with('success', 'Post created successfully!');
+        return redirect()->route('subjects.show', $subject->id)->with('success', 'Post created successfully!');
     }
 
     public function show(Post $post)
     {
-        return response()->json($post);
+        $comments = $post->comments;
+        $subject = $post->subject;
+        return view('posts/show', compact('post', 'subject', 'comments'));
     }
 
     public function update(Request $request, Post $post)

@@ -14,11 +14,11 @@ class CommentController extends Controller
         return response()->json($comments);
     }
 
-    public function store(Request $request, Post $post): JsonResponse
+    public function store(Request $request, Post $post)
     {
         $request->validate([
             'content' => 'required|string',
-            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf',
+            'attachments.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf',
         ]);
 
         $comment = $post->comments()->create([
@@ -26,18 +26,18 @@ class CommentController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        // if an attachment is present
-        if ($request->hasFile('attachment')) {
-            $attachment = $request->file('attachment');
-            $path = $attachment->store('attachments', 'public');
-            $comment->attachments()->create([
-                'file_path' => $path,
-            ]);
+        if ($request->hasFile('attachments')) {
+            foreach ($request->file('attachments') as $file) {
+                $path = $file->store('attachments', 'public');
+                $comment->attachments()->create([
+                    'file_path' => $path,
+                    'file_name' => $file->getClientOriginalName(),
+                ]);
+            }
         }
 
-        return response()->json([
-            'message' => 'Comment added successfully!',
-            'data' => $comment->load('attachments') // eager loading the attachments
-        ], 201);
+        return redirect()
+            ->route('posts.show', [$post->id])
+            ->with('success', 'Comment added successfully!');
     }
 }

@@ -15,11 +15,6 @@
                 <div class="card-body p-4">
                     <h2 class="card-title text-center mb-4">Register</h2>
 
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit">Logout</button>
-                    </form>
-
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 

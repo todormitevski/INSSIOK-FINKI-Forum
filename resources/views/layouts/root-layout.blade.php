@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FINKI Forum</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
     <style>
+        #root-container {
+            max-width: 1550px;
+        }
         .major-card {
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
@@ -23,6 +27,14 @@
         .post-entry:hover {
             background-color: #f8f9fa;
             cursor: pointer;
+        }
+        .forum-row:hover {
+            background-color: #f8f9fa;
+            transition: background-color 0.2s ease;
+        }
+        .forum-post-link:hover {
+            background-color: #e9ecef;
+            transition: background-color 0.2s ease;
         }
     </style>
 </head>
@@ -64,7 +76,7 @@
 {{-- optional --}}
 @yield('header')
 
-<main class="container my-5">
+<main>
 {{--    the dynamic content will go here--}}
     @yield('content')
 </main>

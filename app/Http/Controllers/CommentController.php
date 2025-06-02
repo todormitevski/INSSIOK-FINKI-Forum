@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -14,21 +15,23 @@ class CommentController extends Controller
         return response()->json($comments);
     }
 
-    public function store(Request $request, Post $post)
+    public function store(Request $request, $id)
     {
-        $request->validate([
-            'content' => 'required|string',
-            'attachments.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf',
+        $validated = $request->validate([
+            'content' => 'required|string'
         ]);
 
+        $post = Post::findOrFail($id);
+
         $comment = $post->comments()->create([
-            'content' => $request->input('content'),
-            'user_id' => auth()->id(),
+            'content' => $validated['content'],
+            'user_id' => Auth::id(),
         ]);
 
         if ($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $file) {
                 $path = $file->store('attachments', 'public');
+
                 $comment->attachments()->create([
                     'file_path' => $path,
                     'file_name' => $file->getClientOriginalName(),

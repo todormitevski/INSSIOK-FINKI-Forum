@@ -17,7 +17,7 @@
             <div class="col-lg-3">
                 <div class="card shadow-sm h-100">
                     <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0"><i class="bi bi-chat-left-text mr-2"></i>Скорешни дискусии</h5>
+                        <h5 class="mb-0"><i class="bi bi-chat-left-text mr-2"></i> Активни дискусии</h5>
                     </div>
                     <div class="card-body p-0">
                         <div class="list-group list-group-flush">
@@ -44,7 +44,7 @@
             <div class="col-lg-6">
                 <div class="card shadow-sm">
                     <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0"><i class="bi bi-book mr-2"></i>Смерови</h5>
+                        <h5 class="mb-0"><i class="bi bi-book mr-2"></i> Смерови</h5>
                     </div>
                     <div class="card-body">
                         <div class="row g-3">
@@ -79,7 +79,7 @@
             <div class="col-lg-3">
                 <div class="card shadow-sm mb-4">
                     <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0"><i class="bi bi-fire mr-2"></i>Популарни предмети</h5>
+                        <h5 class="mb-0"><i class="bi bi-fire mr-2"></i> Популарни предмети</h5>
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group list-group-flush">
@@ -97,7 +97,7 @@
 
                 <div class="card shadow-sm mb-4">
                     <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0"><i class="bi bi-people mr-2"></i>Активни корисници</h5>
+                        <h5 class="mb-0"><i class="bi bi-people mr-2"></i> Најактивни корисници</h5>
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group list-group-flush">
@@ -119,7 +119,7 @@
 
                 <div class="card shadow-sm">
                     <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0"><i class="bi bi-bar-chart mr-2"></i>Статистики</h5>
+                        <h5 class="mb-0"><i class="bi bi-bar-chart mr-2"></i> Статистики</h5>
                     </div>
                     <div class="card-body">
                         <ul class="list-unstyled mb-0">

@@ -11,14 +11,25 @@ class CommentController extends Controller
 {
     public function index(Post $post): JsonResponse
     {
-        $comments = $post->comments()->with('attachments')->get();
+        $comments = $post->comments()
+            ->with([
+                'user',
+                'attachments',
+                'replies' => function($query) {
+                    $query->with(['user', 'attachments']);
+                }
+            ])
+            ->whereNull('parent_id')
+            ->get();
+
         return response()->json($comments);
     }
 
     public function store(Request $request, $id)
     {
         $validated = $request->validate([
-            'content' => 'required|string'
+            'content' => 'required|string',
+            'parent_id' => 'nullable|exists:comments,id'
         ]);
 
         $post = Post::findOrFail($id);
@@ -26,6 +37,7 @@ class CommentController extends Controller
         $comment = $post->comments()->create([
             'content' => $validated['content'],
             'user_id' => Auth::id(),
+            'parent_id' => $validated['parent_id'] ?? null
         ]);
 
         if ($request->hasFile('attachments')) {

@@ -1,6 +1,6 @@
 @props(['comment', 'level' => 0])
 
-<div class="bg-light rounded p-3 mt-3 {{ $level > 0 ? 'ms-' . min($level * 4, 48) : '' }}" style="border-left: 3px solid #dee2e6;">
+<div class="bg-light rounded py-3 px-5 mt-3 {{ $level > 0 ? 'ms-' . min($level * 4, 48) : '' }}" style="border-left: 3px solid #dee2e6;">
     <div class="d-flex align-items-center mb-2">
         <img src="https://ui-avatars.com/api/?name={{ urlencode($comment->user->name) }}&background=random"
              alt="{{ $comment->user->name }}" class="rounded-circle me-2" width="30">

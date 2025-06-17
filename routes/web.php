@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::get('posts/{post}/comments', [CommentController::class, 'index']);
     Route::post('posts/{post}/comments', [CommentController::class, 'store'])
         ->name('posts.comments.store');
+    Route::get('/comments/{comment}/thread', [CommentController::class, 'thread'])
+        ->name('comments.thread');
     Route::resource('attachments', AttachmentController::class);
     Route::resource('users', AuthController::class);
 });

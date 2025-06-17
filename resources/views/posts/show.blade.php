@@ -30,64 +30,8 @@
         <div class="mb-5">
             <h3 class="mb-4">💬 Comments</h3>
 
-            @foreach ($comments->whereNull('parent_id') as $comment)
-                <div class="bg-light rounded p-3 mb-3 shadow-sm">
-                    <div class="d-flex align-items-center mb-2">
-                        <img src="https://ui-avatars.com/api/?name={{ urlencode($comment->user->name) }}&background=random"
-                             alt="{{ $comment->user->name }}" class="rounded-circle me-2" width="30">
-                        <span class="fw-semibold">{{ $comment->user->name }}</span>
-                    </div>
-                    <p class="mb-2">{{ $comment->content }}</p>
-
-                    @if ($comment->attachments->count())
-                        <div class="mt-2">
-                            <p class="mb-1 text-muted">📎 Attachments:</p>
-                            <ul class="list-unstyled">
-                                @foreach ($comment->attachments as $attachment)
-                                    <li>
-                                        <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank">
-                                            {{ $attachment->file_name }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <button class="btn btn-sm btn-outline-primary reply-btn mt-2"
-                            data-comment-id="{{ $comment->id }}">
-                        <i class="fas fa-reply"></i> Reply
-                    </button>
-
-                    @foreach ($comment->replies as $reply)
-                        <div class="bg-light rounded p-3 mb-3 shadow-sm mt-3 ms-4" style="border-left: 3px solid #dee2e6;">
-                            <div class="d-flex align-items-center mb-2">
-                                <img src="https://ui-avatars.com/api/?name={{ urlencode($reply->user->name) }}&background=random"
-                                     alt="{{ $reply->user->name }}" class="rounded-circle me-2" width="30">
-                                <span class="fw-semibold">{{ $reply->user->name }}</span>
-                                <small class="text-muted ms-2">
-                                    <i class="fas fa-reply"></i> Replying to {{ $comment->user->name }}
-                                </small>
-                            </div>
-                            <p class="mb-2">{{ $reply->content }}</p>
-
-                            @if ($reply->attachments->count())
-                                <div class="mt-2">
-                                    <p class="mb-1 text-muted">📎 Attachments:</p>
-                                    <ul class="list-unstyled">
-                                        @foreach ($reply->attachments as $attachment)
-                                            <li>
-                                                <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank">
-                                                    {{ $attachment->file_name }}
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
+            @foreach ($comments as $comment)
+                <x-comment :comment="$comment" />
             @endforeach
 
             @if($comments->whereNull('parent_id')->isEmpty())

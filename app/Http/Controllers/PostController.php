@@ -51,7 +51,10 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        $comments = $post->comments;
+        $comments = $post->comments()
+            ->whereNull('parent_id')
+            ->with(['user', 'attachments', 'repliesRecursive'])
+            ->get();
         $subject = $post->subject;
         return view('posts/show', compact('post', 'subject', 'comments'));
     }

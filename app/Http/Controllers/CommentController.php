@@ -7,6 +7,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Comment;
+
 class CommentController extends Controller
 {
     public function index(Post $post): JsonResponse
@@ -54,5 +56,19 @@ class CommentController extends Controller
         return redirect()
             ->route('posts.show', [$post->id])
             ->with('success', 'Comment added successfully!');
+    }
+
+    public function thread(Comment $comment)
+    {
+        $root = $comment;
+        $chain = [];
+
+        while ($root->parent) {
+            $root = $root->parent;
+        }
+
+        $root->load(['user', 'attachments', 'repliesRecursive']);
+
+        return view('comments.thread', compact('root'));
     }
 }

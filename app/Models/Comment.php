@@ -29,6 +29,11 @@ class Comment extends Model
         return $this->hasMany(Comment::class, 'parent_id');
     }
 
+    public function repliesRecursive(): HasMany
+    {
+        return $this->replies()->with(['user', 'attachments', 'repliesRecursive']);
+    }
+
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Comment::class, 'parent_id');

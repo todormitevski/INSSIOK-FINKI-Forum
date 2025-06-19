@@ -18,6 +18,25 @@
             @endauth
         </div>
 
+        <!-- Search bar for posts -->
+        <form action="{{ route('subjects.show', $subject->id) }}" method="GET" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="search" value="{{ request('search') }}" class="form-control"
+                       placeholder="Пребарај постови по наслов или содржина...">
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="bi bi-search"></i> Пребарај
+                </button>
+            </div>
+        </form>
+
+        @if(request('search'))
+            <div class="mb-2">
+                <a href="{{ route('subjects.show', $subject->id) }}" class="text-decoration-none">
+                    <i class="bi bi-x-circle"></i> Исчисти пребарување
+                </a>
+            </div>
+        @endif
+
         <div class="card shadow-sm border-0">
             <div class="card-header bg-light py-3">
                 <h5 class="mb-0 text-uppercase text-muted">Дискусии</h5>

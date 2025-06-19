@@ -12,6 +12,23 @@
 @section('content')
     <div class="container my-5">
         <div class="table-responsive rounded shadow-sm">
+
+            <form method="GET" action="{{ route('subjects.index') }}" class="mb-4">
+                <div class="input-group">
+                    <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
+                    <input type="text" name="search" class="form-control" placeholder="Пребарај предмет..." value="{{ request('search') }}">
+                    <button class="btn btn-outline-primary" type="submit">Пребарај</button>
+                </div>
+            </form>
+
+            @if(request('search'))
+                <div class="mb-2">
+                    <a href="{{ route('subjects.index') }}" class="text-decoration-none">
+                        <i class="bi bi-x-circle"></i> Исчисти пребарување
+                    </a>
+                </div>
+            @endif
+
             <table class="table table-hover align-middle mb-0 bg-white">
                 <thead class="table-light text-uppercase small text-muted">
                 <tr>

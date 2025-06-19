@@ -8,27 +8,43 @@ use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $subjects = Subject::withCount('posts')
-            ->with(['posts' => fn ($q) => $q->latest('updated_at')])
-            ->get()
-            ->map(function ($subject) {
-                $subject->last_activity = optional($subject->posts->first())->updated_at;
-                return $subject;
-            });
-        return view('subjects/index', compact('subjects'));
+        $query = Subject::withCount('posts')
+            ->with(['posts' => fn ($q) => $q->latest('updated_at')]);
+
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->input('search') . '%');
+        }
+
+        $subjects = $query->get()->map(function ($subject) {
+            $subject->last_activity = optional($subject->posts->first())->updated_at;
+            return $subject;
+        });
+
+        return view('subjects.index', compact('subjects'));
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $subject = Subject::findOrFail($id);
-        $posts = Post::with(['user', 'attachments'])
-            ->where('subject_id', $subject->id)
-            ->latest()
-            ->get();
-        return view('subjects/show', compact('subject', 'posts'));
+        $subject = Subject::with('major')->findOrFail($id);
+
+        $query = Post::with(['user', 'attachments'])
+            ->where('subject_id', $subject->id);
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('content', 'like', '%' . $search . '%');
+            });
+        }
+
+        $posts = $query->latest()->get();
+
+        return view('subjects.show', compact('subject', 'posts'));
     }
+
 
     public function store(Request $request)
     {

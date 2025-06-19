@@ -13,6 +13,14 @@
 
 @section('content')
     <div class="container my-5" id="root-container">
+        <form action="{{ route('search') }}" method="GET" class="mb-5">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Пребарај постови, предмети, корисници...">
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="bi bi-search"></i> Пребарај
+                </button>
+            </div>
+        </form>
         <div class="row g-4">
             <div class="col-lg-3">
                 <div class="card shadow-sm h-100">

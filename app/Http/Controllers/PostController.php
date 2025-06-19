@@ -24,7 +24,8 @@ class PostController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'required|string'
+            'content' => 'required|string',
+            'attachments.*' => 'nullable|file|mimes:jpg,png,pdf,docx|max:2048',
         ]);
 
         $subject = Subject::findOrFail($id);
@@ -37,11 +38,10 @@ class PostController extends Controller
 
         if ($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $file) {
-                $path = $file->store('attachments', 'public');
-
                 $post->attachments()->create([
                     'file_name' => $file->getClientOriginalName(),
-                    'file_path' => $path,
+                    'file_content' => base64_encode(file_get_contents($file->getRealPath())),
+                    'mime_type' => $file->getClientMimeType(),
                 ]);
             }
         }

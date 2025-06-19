@@ -18,7 +18,6 @@
             @endauth
         </div>
 
-        <!-- Search bar for posts -->
         <form action="{{ route('subjects.show', $subject->id) }}" method="GET" class="mb-4">
             <div class="input-group">
                 <input type="text" name="search" value="{{ request('search') }}" class="form-control"
@@ -48,8 +47,8 @@
                        class="list-group-item list-group-item-action d-flex flex-column gap-1 py-4 forum-post-link">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
-                                <img src="{{ asset('images/user-icon.png') }}"
-                                     class="rounded-circle me-3" width="40" height="40" alt="User Icon">
+                                <img src="https://ui-avatars.com/api/?name={{ urlencode($post->user->name) }}&background=random"
+                                     alt="{{ $post->user->name }}" class="rounded-circle me-2" width="40">
                                 <strong class="me-2">{{ $post->user->name }}</strong>
                                 <span class="text-muted small">• {{ $post->created_at->diffForHumans() }}</span>
                             </div>

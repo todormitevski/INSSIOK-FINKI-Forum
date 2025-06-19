@@ -5,10 +5,21 @@
         <h2 class="mb-4">Резултати за: <span class="text-primary">"{{ $q }}"</span></h2>
 
         <div class="mb-5">
+            <h4 class="mb-3 text-muted"><i class="bi bi-mortarboard me-1"></i> Смерови</h4>
+            @forelse ($majors as $major)
+                <a href="{{ route('majors.show', $major->id) }}" class="list-group-item list-group-item-action mb-2 shadow-sm p-3">
+                    <strong>{{ $major->name }}</strong>
+                </a>
+            @empty
+                <p class="text-muted">Нема совпаѓања за смерови.</p>
+            @endforelse
+        </div>
+
+        <div class="mb-5">
             <h4 class="mb-3 text-muted"><i class="bi bi-book me-1"></i> Предмети</h4>
             @forelse ($subjects as $subject)
                 <a href="{{ route('subjects.show', $subject->id) }}" class="list-group-item list-group-item-action mb-2 shadow-sm p-3">
-                    <strong>{{ $subject->name }}</strong
+                    <strong>{{ $subject->name }}</strong>
                 </a>
             @empty
                 <p class="text-muted">Нема совпаѓања за предмети.</p>

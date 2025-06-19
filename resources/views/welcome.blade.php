@@ -15,7 +15,7 @@
     <div class="container my-5" id="root-container">
         <form action="{{ route('search') }}" method="GET" class="mb-5">
             <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Пребарај постови, предмети, корисници...">
+                <input type="text" name="q" class="form-control" placeholder="Пребарај смерови, постови, предмети...">
                 <button type="submit" class="btn btn-outline-primary">
                     <i class="bi bi-search"></i> Пребарај
                 </button>
@@ -144,7 +144,7 @@
                                 <strong>{{ $stats['total_subjects'] }}</strong>
                             </li>
                             <li class="d-flex justify-content-between">
-                                <span>Денес:</span>
+                                <span>Објави денес:</span>
                                 <strong>{{ $stats['today_posts'] }}</strong>
                             </li>
                         </ul>

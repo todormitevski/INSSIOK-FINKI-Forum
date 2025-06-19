@@ -5,6 +5,16 @@
         <div class="mb-4">
             <h5 class="text-muted">{{ $subject->name }}</h5>
             <div class="bg-white rounded shadow-sm p-4">
+
+                <div class="d-flex align-items-center mb-3">
+                    <img src="https://ui-avatars.com/api/?name={{ urlencode($post->user->name) }}&background=random"
+                         alt="{{ $post->user->name }}" class="rounded-circle me-3" width="50" height="50">
+                    <div>
+                        <div class="fw-semibold text-dark">Posted by {{ $post->user->name }}</div>
+                        <small class="text-muted">{{ $post->created_at->format('F j, Y \a\t H:i') }}</small>
+                    </div>
+                </div>
+
                 <h2 class="fw-bold">{{ $post->title }}</h2>
                 <p class="lead mb-3">{{ $post->content }}</p>
 
@@ -14,7 +24,7 @@
                         <ul class="list-unstyled">
                             @foreach ($post->attachments as $attachment)
                                 <li>
-                                    <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank">{{ $attachment->file_name }}</a>
+                                    <a href="{{ route('attachments.download', $attachment->id) }}">{{ $attachment->file_name }}</a>
                                 </li>
                             @endforeach
                         </ul>
@@ -49,7 +59,6 @@
                         @csrf
                         <input type="hidden" name="parent_id" id="parent_id" value="">
 
-                        <!-- Cancel Reply Button -->
                         <div id="cancel-reply-container" class="mb-2" style="display: none;">
                             <span class="text-muted">Replying to: <span id="replying-to-name"></span></span>
                             <button type="button" id="cancel-reply" class="btn btn-sm btn-outline-danger ms-2">
@@ -82,19 +91,16 @@
             const replyingToName = document.getElementById('replying-to-name');
             const cancelReplyBtn = document.getElementById('cancel-reply');
 
-            // Function to reset the reply state
             function resetReplyState() {
                 parentIdInput.value = '';
                 contentTextarea.placeholder = '';
                 cancelReplyContainer.style.display = 'none';
 
-                // Remove highlight from all comments
                 document.querySelectorAll('.bg-light').forEach(el => {
                     el.style.backgroundColor = '';
                 });
             }
 
-            // Handle reply button clicks
             document.querySelectorAll('.reply-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const commentId = this.getAttribute('data-comment-id');
@@ -104,17 +110,14 @@
                     contentTextarea.focus();
                     contentTextarea.placeholder = `Replying to ${commentAuthor}...`;
 
-                    // Show who you're replying to
                     replyingToName.textContent = commentAuthor;
                     cancelReplyContainer.style.display = 'block';
 
-                    // Scroll to the comment form
                     contentTextarea.scrollIntoView({
                         behavior: 'smooth',
                         block: 'nearest'
                     });
 
-                    // Highlight the selected comment
                     document.querySelectorAll('.bg-light').forEach(el => {
                         el.style.backgroundColor = '';
                     });
@@ -122,7 +125,6 @@
                 });
             });
 
-            // Handle cancel reply button
             cancelReplyBtn.addEventListener('click', function() {
                 resetReplyState();
             });

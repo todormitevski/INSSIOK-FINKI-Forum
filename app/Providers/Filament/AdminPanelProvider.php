@@ -42,7 +42,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->font('Ubuntu')
             ->brandName(fn () => view('vendor.filament-panels.components.logo'))
-            ->favicon(asset('images/favicon.png'))
+            ->favicon(asset('images/finki-logo.png'))
             ->navigationGroups([
                 NavigationGroup::make()
                     ->label('System Management'),

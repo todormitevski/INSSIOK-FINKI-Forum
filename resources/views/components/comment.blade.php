@@ -14,9 +14,7 @@
             <ul class="list-unstyled">
                 @foreach ($comment->attachments as $attachment)
                     <li>
-                        <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank">
-                            {{ $attachment->file_name }}
-                        </a>
+                        <a href="{{ route('attachments.download', $attachment->id) }}">{{ $attachment->file_name }}</a>
                     </li>
                 @endforeach
             </ul>
@@ -28,7 +26,6 @@
         <i class="fas fa-reply"></i> Reply
     </button>
 
-    {{-- for displaying nested replies --}}
     @if ($comment->replies->count())
         @if ($level < 4)
             @foreach ($comment->replies as $reply)

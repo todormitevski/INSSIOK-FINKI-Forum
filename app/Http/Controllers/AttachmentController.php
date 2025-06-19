@@ -35,11 +35,11 @@ class AttachmentController extends Controller
         }
 
         $file = $request->file('file');
-        $path = $file->store('private');
 
         $attachment = Attachment::create([
             'file_name' => $file->getClientOriginalName(),
-            'file_path' => $path,
+            'file_content' => base64_encode(file_get_contents($file->getRealPath())),
+            'mime_type' => $file->getClientMimeType(),
             'attachable_id' => $request->post_id ?? $request->comment_id,
             'attachable_type' => $request->post_id ? Post::class : Comment::class,
         ]);
@@ -57,10 +57,6 @@ class AttachmentController extends Controller
     {
         $attachment = Attachment::findOrFail($id);
 
-        // Delete the file from storage
-        Storage::delete($attachment->file_path);
-
-        // Delete the attachment record
         $attachment->delete();
 
         return response()->json(['message' => 'Attachment deleted successfully.']);
@@ -70,10 +66,22 @@ class AttachmentController extends Controller
     {
         $attachment = Attachment::findOrFail($id);
 
-        if (!Storage::exists($attachment->file_path)) {
-            abort(404, 'File not found');
+        if (empty($attachment->file_content)) {
+            abort(404, 'File content not found');
         }
 
-        return Storage::download($attachment->file_path, $attachment->file_name);
+        return response()->streamDownload(
+            function () use ($attachment) {
+                echo base64_decode($attachment->file_content);
+            },
+            $attachment->file_name,
+            [
+                'Content-Type' => $attachment->mime_type,
+                'Content-Disposition' => 'attachment; filename="'.$attachment->file_name.'"',
+                'Pragma' => 'no-cache',
+                'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+                'Expires' => '0'
+            ]
+        );
     }
 }

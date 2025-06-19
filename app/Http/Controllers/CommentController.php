@@ -44,11 +44,10 @@ class CommentController extends Controller
 
         if ($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $file) {
-                $path = $file->store('attachments', 'public');
-
                 $comment->attachments()->create([
-                    'file_path' => $path,
                     'file_name' => $file->getClientOriginalName(),
+                    'file_content' => base64_encode(file_get_contents($file->getRealPath())),
+                    'mime_type' => $file->getClientMimeType(),
                 ]);
             }
         }
@@ -61,7 +60,6 @@ class CommentController extends Controller
     public function thread(Comment $comment)
     {
         $root = $comment;
-        $chain = [];
 
         while ($root->parent) {
             $root = $root->parent;
